@@ -1,0 +1,67 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build_meta"
+
+[project]
+name = "databricks-sql-handler"
+version = "1.0.0"
+description = "A comprehensive Databricks SQL handler with Pydantic models, OAuth authentication, and connection management"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Andras Gyacsok", email = "atti.dyachok@gmail.com"},
+]
+maintainers = [
+    {name = "Andras Gyacsok", email = "atti.dyachok@gmail.com"},
+]
+keywords = ["databricks", "sql", "pydantic", "oauth", "database"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Database",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "pyarrow>=21.0.0",
+    "databricks-sdk>=0.62.0",
+    "pydantic>=2.11.7",
+    "pydantic-settings>=2.10.1",
+    "databricks>=0.2",
+    "databricks-sql>=1.0.0",
+    "certifi>=2025.8.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4.1",
+    "black",
+    "flake8",
+    "mypy",
+    "pre-commit",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/databricks-sql-handler"
+Repository = "https://github.com/yourusername/databricks-sql-handler.git"
+Documentation = "https://github.com/yourusername/databricks-sql-handler#readme"
+Issues = "https://github.com/yourusername/databricks-sql-handler/issues"
+
+[project.scripts]
+databricks-sql-handler = "src.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/README.md",
+    "/LICENSE",
+]
