@@ -1,15 +1,15 @@
 """Databricks SQL Handler Package."""
 
-from src.settings import DatabricksSettings, settings
-from src.models import (
+from dbxsql.settings import DatabricksSettings, settings
+from dbxsql.models import (
     QueryResult, QueryStatus, QueryMetrics, ConnectionInfo,
     FileInfo, TableInfo, NexsysRecord, SalesRecord, GenericRecord,
     MODEL_REGISTRY, get_model_class, register_model, list_available_models
 )
-from src.auth import OAuthManager, TokenProvider
-from src.connection import ConnectionManager, ConnectionManagerInterface
-from src.query_handler import QueryHandler, ResultParser, PydanticResultParser
-from src.exceptions import (
+from dbxsql.auth import OAuthManager, TokenProvider
+from dbxsql.connection import ConnectionManager, ConnectionManagerInterface
+from dbxsql.query_handler import QueryHandler, ResultParser, PydanticResultParser
+from dbxsql.exceptions import (
     DatabricksHandlerError, AuthenticationError, ConnectionError,
     QueryExecutionError, SyntaxError, TimeoutError, DataParsingError
 )

@@ -5,10 +5,10 @@ from unittest.mock import Mock, patch, MagicMock
 from datetime import datetime
 from contextlib import contextmanager
 
-from src.connection import ConnectionManager, ConnectionManagerInterface, AuthenticationManagerProtocol
-from src.settings import DatabricksSettings
-from src.models import ConnectionInfo
-from src.exceptions import ConnectionError
+from dbxsql.connection import ConnectionManager, ConnectionManagerInterface, AuthenticationManagerProtocol
+from dbxsql.settings import DatabricksSettings
+from dbxsql.models import ConnectionInfo
+from dbxsql.exceptions import ConnectionError
 
 
 class TestConnectionManager:
@@ -47,7 +47,7 @@ class TestConnectionManager:
         assert conn_info.connection_time is None
         assert conn_info.last_activity is None
 
-    @patch('src.connection.sql.connect')
+    @patch('dbxsql.connection.sql.connect')
     def test_successful_connection(self, mock_sql_connect, connection_manager, mock_auth_manager):
         """Test successful database connection."""
         # Mock databricks sql objects
@@ -77,7 +77,7 @@ class TestConnectionManager:
         assert isinstance(conn_info.connection_time, datetime)
         assert isinstance(conn_info.last_activity, datetime)
 
-    @patch('src.connection.sql.connect')
+    @patch('dbxsql.connection.sql.connect')
     def test_already_connected_scenario(self, mock_sql_connect, connection_manager):
         """Test connecting when already connected."""
         # Set up as already connected
@@ -91,7 +91,7 @@ class TestConnectionManager:
         # Should not make new connection
         mock_sql_connect.assert_not_called()
 
-    @patch('src.connection.sql.connect')
+    @patch('dbxsql.connection.sql.connect')
     def test_connection_failure(self, mock_sql_connect, connection_manager, mock_auth_manager):
         """Test connection failure."""
         mock_sql_connect.side_effect = Exception("Connection failed")
@@ -154,7 +154,7 @@ class TestConnectionManager:
         connection_manager._connection_info.is_connected = True
         assert connection_manager.is_connected()
 
-    @patch('src.connection.sql.connect')
+    @patch('dbxsql.connection.sql.connect')
     def test_ensure_connected_when_not_connected(self, mock_sql_connect, connection_manager):
         """Test ensure_connected when not connected."""
         # Mock successful connection
@@ -181,7 +181,7 @@ class TestConnectionManager:
         # Should update activity time
         assert connection_manager._connection_info.last_activity != old_activity
 
-    @patch('src.connection.sql.connect')
+    @patch('dbxsql.connection.sql.connect')
     def test_get_cursor_success(self, mock_sql_connect, connection_manager):
         """Test getting cursor successfully."""
         # Mock successful connection
@@ -207,7 +207,7 @@ class TestConnectionManager:
 
         assert "Failed to get database cursor" in str(exc_info.value)
 
-    @patch('src.connection.sql.connect')
+    @patch('dbxsql.connection.sql.connect')
     def test_refresh_connection(self, mock_sql_connect, connection_manager):
         """Test connection refresh."""
         # Set up initial connection

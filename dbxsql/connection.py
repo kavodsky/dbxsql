@@ -7,10 +7,10 @@ from typing import Optional, Protocol
 from contextlib import contextmanager
 from abc import ABC, abstractmethod
 
-from src.settings import DatabricksSettings
-from src.auth import OAuthManager
-from src.models import ConnectionInfo
-from src.exceptions import ConnectionError
+from dbxsql.settings import DatabricksSettings
+from dbxsql.auth import OAuthManager
+from dbxsql.models import ConnectionInfo
+from dbxsql.exceptions import ConnectionError
 
 logger = logging.getLogger(__name__)
 

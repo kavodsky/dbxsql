@@ -15,7 +15,7 @@ A comprehensive Python package for interacting with Databricks SQL warehouses us
 ## Installation
 
 ```bash
-pip install databricks-sql-handler
+pip install dbxsql
 ```
 
 ## Quick Start
@@ -23,7 +23,7 @@ pip install databricks-sql-handler
 ### Basic Usage
 
 ```python
-from databricks_sql_handler import QueryHandler, DatabricksSettings, NexsysRecord
+from dbxsql import QueryHandler, DatabricksSettings, NexsysRecord
 
 # Configure settings (or use environment variables)
 settings = DatabricksSettings(
@@ -65,13 +65,13 @@ DATABRICKS_LOG_LEVEL=INFO
 
 ```bash
 # Interactive mode
-databricks-sql-handler --interactive
+dbxsql --interactive
 
 # Run example queries
-databricks-sql-handler --examples
+dbxsql --examples
 
 # Execute a single query
-databricks-sql-handler --query "SELECT current_timestamp()"
+dbxsql --query "SELECT current_timestamp()"
 ```
 
 ## Custom Models
@@ -90,7 +90,7 @@ class MyCustomModel(BaseModel):
     amount: Optional[float] = None
 
 # Register the model
-from databricks_sql_handler import register_model
+from dbxsql import register_model
 register_model("my_custom", MyCustomModel)
 
 # Use it in queries
@@ -139,7 +139,7 @@ Main class for executing queries and managing connections.
 The package provides specific exceptions:
 
 ```python
-from databricks_sql_handler import (
+from dbxsql import (
     AuthenticationError,
     ConnectionError, 
     QueryExecutionError,

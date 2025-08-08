@@ -8,13 +8,13 @@ from typing import Any, Dict, List, Optional, Type, TypeVar, Protocol
 from pydantic import BaseModel, ValidationError
 from abc import ABC, abstractmethod
 
-from src.settings import DatabricksSettings
-from src.connection import ConnectionManager, ConnectionManagerInterface
-from src.models import (
+from dbxsql.settings import DatabricksSettings
+from dbxsql.connection import ConnectionManager, ConnectionManagerInterface
+from dbxsql.models import (
     QueryResult, QueryStatus, QueryMetrics, FileInfo, TableInfo,
     GenericRecord, get_model_class
 )
-from src.exceptions import (
+from dbxsql.exceptions import (
     QueryExecutionError, SyntaxError, TimeoutError, DataParsingError
 )
 

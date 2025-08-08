@@ -5,7 +5,7 @@ from datetime import datetime
 from pydantic import ValidationError
 from typing import List
 
-from src.models import (
+from dbxsql.models import (
     QueryStatus, FileInfo, TableInfo, QueryResult, QueryMetrics,
     ConnectionInfo, NexsysRecord, SalesRecord, GenericRecord,
     get_model_class, register_model, list_available_models, MODEL_REGISTRY

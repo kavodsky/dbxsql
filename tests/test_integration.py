@@ -5,9 +5,9 @@ import os
 from unittest.mock import patch, Mock
 from datetime import datetime
 
-from src import QueryHandler, settings, GenericRecord, NexsysRecord
-from src.models import QueryStatus
-from src.exceptions import AuthenticationError, ConnectionError
+from dbxsql import QueryHandler, settings, GenericRecord, NexsysRecord
+from dbxsql.models import QueryStatus
+from dbxsql.exceptions import AuthenticationError, ConnectionError
 
 
 @pytest.mark.integration
@@ -17,8 +17,8 @@ class TestQueryHandlerIntegration:
     @pytest.fixture
     def mock_databricks_environment(self):
         """Mock the entire Databricks environment."""
-        with patch('src.connection.sql') as mock_sql, \
-                patch('src.auth.requests') as mock_requests:
+        with patch('dbxsql.connection.sql') as mock_sql, \
+                patch('dbxsql.auth.requests') as mock_requests:
             # Mock successful authentication
             mock_auth_response = Mock()
             mock_auth_response.status_code = 200

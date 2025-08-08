@@ -7,7 +7,7 @@ import os
 import tempfile
 from pathlib import Path
 
-from src.settings import DatabricksSettings
+from dbxsql.settings import DatabricksSettings
 
 
 class TestDatabricksSettings:

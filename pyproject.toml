@@ -1,9 +1,9 @@
 [build-system]
 requires = ["hatchling"]
-build-backend = "hatchling.build_meta"
+build-backend = "hatchling.build"
 
 [project]
-name = "databricks-sql-handler"
+name = "dbxsql"
 version = "1.0.0"
 description = "A comprehensive Databricks SQL handler with Pydantic models, OAuth authentication, and connection management"
 readme = "README.md"
@@ -48,20 +48,27 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/databricks-sql-handler"
-Repository = "https://github.com/yourusername/databricks-sql-handler.git"
-Documentation = "https://github.com/yourusername/databricks-sql-handler#readme"
-Issues = "https://github.com/yourusername/databricks-sql-handler/issues"
+Homepage = "https://github.com/kavodsky/dbxsql"
+Repository = "https://github.com/kavodsky/dbxsql.git"
+Documentation = "https://github.com/kavodsky/dbxsql#readme"
+Issues = "https://github.com/kavodsky/dbxsql/issues"
 
 [project.scripts]
-databricks-sql-handler = "src.main:main"
+dbxsql = "dbxsql.main:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src"]
+packages = ["dbxsql"]
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "/src",
+    "/dbxsql",
     "/README.md",
     "/LICENSE",
+]
+
+[dependency-groups]
+dev = [
+    "build>=1.3.0",
+    "hatchling>=1.27.0",
+    "twine>=6.1.0",
 ]

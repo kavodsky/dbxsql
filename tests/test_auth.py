@@ -5,9 +5,9 @@ from unittest.mock import Mock, patch, MagicMock
 from datetime import datetime, timedelta
 import requests
 
-from src.auth import OAuthManager, TokenProvider
-from src.settings import DatabricksSettings
-from src.exceptions import AuthenticationError
+from dbxsql.auth import OAuthManager, TokenProvider
+from dbxsql.settings import DatabricksSettings
+from dbxsql.exceptions import AuthenticationError
 
 
 class TestOAuthManager:
@@ -33,7 +33,7 @@ class TestOAuthManager:
         """Test that OAuthManager implements TokenProvider protocol."""
         assert isinstance(oauth_manager, TokenProvider)
 
-    @patch('src.auth.requests.post')
+    @patch('dbxsql.auth.requests.post')
     def test_successful_token_refresh(self, mock_post, oauth_manager, mock_settings):
         """Test successful token refresh."""
         # Mock successful response
@@ -62,7 +62,7 @@ class TestOAuthManager:
             timeout=30
         )
 
-    @patch('src.auth.requests.post')
+    @patch('dbxsql.auth.requests.post')
     def test_token_not_refreshed_when_valid(self, mock_post, oauth_manager):
         """Test that valid token is not refreshed unnecessarily."""
         # Set up a valid token
@@ -75,7 +75,7 @@ class TestOAuthManager:
         # Should not make HTTP request
         mock_post.assert_not_called()
 
-    @patch('src.auth.requests.post')
+    @patch('dbxsql.auth.requests.post')
     def test_force_refresh_token(self, mock_post, oauth_manager):
         """Test force refresh of valid token."""
         # Set up a valid token
@@ -96,7 +96,7 @@ class TestOAuthManager:
         assert token == 'new_access_token'
         mock_post.assert_called_once()
 
-    @patch('src.auth.requests.post')
+    @patch('dbxsql.auth.requests.post')
     def test_token_refresh_failure_http_error(self, mock_post, oauth_manager):
         """Test token refresh failure with HTTP error."""
         # Mock failed response
@@ -111,7 +111,7 @@ class TestOAuthManager:
         assert "Failed to get OAuth token: 400" in str(exc_info.value)
         assert "Invalid client credentials" in str(exc_info.value)
 
-    @patch('src.auth.requests.post')
+    @patch('dbxsql.auth.requests.post')
     def test_token_refresh_network_error(self, mock_post, oauth_manager):
         """Test token refresh failure with network error."""
         # Mock network error
@@ -122,7 +122,7 @@ class TestOAuthManager:
 
         assert "Network error while getting OAuth token" in str(exc_info.value)
 
-    @patch('src.auth.requests.post')
+    @patch('dbxsql.auth.requests.post')
     def test_token_refresh_unexpected_error(self, mock_post, oauth_manager):
         """Test token refresh failure with unexpected error."""
         # Mock unexpected error
@@ -133,7 +133,7 @@ class TestOAuthManager:
 
         assert "Unexpected error during authentication" in str(exc_info.value)
 
-    @patch('src.auth.requests.post')
+    @patch('dbxsql.auth.requests.post')
     def test_invalid_token_response(self, mock_post, oauth_manager):
         """Test handling of invalid token response."""
         # Mock response without access_token
@@ -165,7 +165,7 @@ class TestOAuthManager:
         oauth_manager._token_expiry = datetime.now() - timedelta(minutes=10)
         assert oauth_manager._is_token_expired()
 
-    @patch('src.auth.requests.post')
+    @patch('dbxsql.auth.requests.post')
     def test_default_token_expiry(self, mock_post, oauth_manager):
         """Test default token expiry when not provided."""
         # Mock response without expires_in
@@ -231,7 +231,7 @@ class TestOAuthManager:
         assert isinstance(info['expires_in_seconds'], int)
         assert info['expires_in_seconds'] > 0
 
-    @patch('src.auth.requests.post')
+    @patch('dbxsql.auth.requests.post')
     def test_get_access_token_no_valid_token_after_refresh(self, mock_post, oauth_manager):
         """Test error when no valid token after refresh attempt."""
         # Mock successful response but somehow token is not set
@@ -265,8 +265,8 @@ class TestOAuthManager:
         oauth_manager._token_buffer_minutes = 1
         assert not oauth_manager._is_token_expired()
 
-    @patch('src.auth.datetime')
-    @patch('src.auth.requests.post')
+    @patch('dbxsql.auth.datetime')
+    @patch('dbxsql.auth.requests.post')
     def test_token_expiry_calculation(self, mock_post, mock_datetime, oauth_manager):
         """Test token expiry calculation."""
         fixed_time = datetime(2023, 1, 1, 12, 0, 0)

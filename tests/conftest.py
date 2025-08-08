@@ -4,10 +4,10 @@ import pytest
 from unittest.mock import Mock
 from datetime import datetime
 
-from src.settings import DatabricksSettings
-from src.models import ConnectionInfo, QueryResult, QueryStatus
-from src.auth import OAuthManager
-from src.connection import ConnectionManager
+from dbxsql.settings import DatabricksSettings
+from dbxsql.models import ConnectionInfo, QueryResult, QueryStatus
+from dbxsql.auth import OAuthManager
+from dbxsql.connection import ConnectionManager
 
 
 @pytest.fixture
@@ -84,7 +84,7 @@ def sample_failed_query_result():
 @pytest.fixture(autouse=True)
 def reset_model_registry():
     """Reset model registry after each test to prevent side effects."""
-    from src.models import MODEL_REGISTRY
+    from dbxsql.models import MODEL_REGISTRY
 
     # Store original registry
     original_registry = MODEL_REGISTRY.copy()

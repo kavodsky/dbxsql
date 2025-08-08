@@ -5,17 +5,17 @@ from unittest.mock import Mock, patch, MagicMock
 from databricks import sql
 import time
 
-from src.query_handler import (
+from dbxsql.query_handler import (
     QueryHandler, PydanticResultParser, QueryExecutor, RetryPolicy,
     ResultParser
 )
-from src.settings import DatabricksSettings
-from src.connection import ConnectionManagerInterface
-from src.models import (
+from dbxsql.settings import DatabricksSettings
+from dbxsql.connection import ConnectionManagerInterface
+from dbxsql.models import (
     QueryResult, QueryStatus, QueryMetrics, GenericRecord,
     FileInfo, TableInfo, NexsysRecord
 )
-from src.exceptions import (
+from dbxsql.exceptions import (
     QueryExecutionError, SyntaxError, TimeoutError, DataParsingError
 )
 
@@ -369,7 +369,7 @@ class TestQueryHandler:
 
     def test_query_handler_initialization_default_connection_manager(self, mock_settings):
         """Test QueryHandler initialization with default connection manager."""
-        with patch('src.query_handler.ConnectionManager') as mock_conn_class:
+        with patch('dbxsql.query_handler.ConnectionManager') as mock_conn_class:
             mock_conn_instance = Mock()
             mock_conn_class.return_value = mock_conn_instance
 
@@ -389,7 +389,7 @@ class TestQueryHandler:
         query_handler.disconnect()
         mock_connection_manager.disconnect.assert_called_once()
 
-    @patch('src.query_handler.QueryExecutor')
+    @patch('dbxsql.query_handler.QueryExecutor')
     def test_execute_query(self, mock_executor_class, query_handler):
         """Test execute_query method."""
         mock_executor = Mock()
@@ -406,7 +406,7 @@ class TestQueryHandler:
         # Metrics should be updated
         assert query_handler.metrics.total_queries == 1
 
-    @patch('src.query_handler.RetryPolicy')
+    @patch('dbxsql.query_handler.RetryPolicy')
     def test_execute_query_with_retry(self, mock_retry_class, query_handler):
         """Test execute_query_with_retry method."""
         mock_retry_policy = Mock()
@@ -424,7 +424,7 @@ class TestQueryHandler:
         """Test execute_query_with_retry with default max_retries."""
         mock_settings.max_retries = 3
 
-        with patch('src.query_handler.RetryPolicy') as mock_retry_class:
+        with patch('dbxsql.query_handler.RetryPolicy') as mock_retry_class:
             mock_retry_policy = Mock()
             mock_retry_class.return_value = mock_retry_policy
 
@@ -509,7 +509,7 @@ class TestQueryHandler:
     def test_query_with_model(self, query_handler):
         """Test query_with_model convenience method."""
         with patch.object(query_handler, 'execute_query') as mock_execute:
-            with patch('src.query_handler.get_model_class') as mock_get_model:
+            with patch('dbxsql.query_handler.get_model_class') as mock_get_model:
                 mock_get_model.return_value = GenericRecord
                 mock_result = QueryResult(status=QueryStatus.SUCCESS)
                 mock_execute.return_value = mock_result

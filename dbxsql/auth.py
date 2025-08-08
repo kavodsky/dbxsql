@@ -6,8 +6,8 @@ from typing import Optional, Dict, Any
 from datetime import datetime, timedelta
 from abc import ABC, abstractmethod
 
-from src.settings import DatabricksSettings
-from src.exceptions import AuthenticationError
+from dbxsql.settings import DatabricksSettings
+from dbxsql.exceptions import AuthenticationError
 
 logger = logging.getLogger(__name__)
 

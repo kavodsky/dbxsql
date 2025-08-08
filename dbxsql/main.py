@@ -5,7 +5,7 @@ import logging
 import argparse
 from pathlib import Path
 
-from src import (
+from dbxsql import (
     QueryHandler, settings, QueryResult, NexsysRecord, SalesRecord,
     GenericRecord, get_model_class, list_available_models, DatabricksHandlerError
 )
