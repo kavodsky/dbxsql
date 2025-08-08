@@ -156,6 +156,36 @@ except QueryExecutionError as e:
     print(f"Query failed: {e}")
 ```
 
+## Troubleshooting
+
+### CERTIFICATE_VERIFY_FAILED
+
+Sometimes, depending on an operational system the next error message could be returned:
+
+```
+dbxsql.exceptions.ConnectionError: Failed to connect to Databricks: Error during request to server: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self signed certificate in certificate chain (_ssl.c:1007)
+```
+This error can be fixed by setting an environment variable **SSL_CERT_FILE**. This can be done in a terminal:
+```bash
+  export SSL_CERT_FILE=/path/to/databricks.pem
+```
+or directly in the code:
+```python
+import os
+import certifi
+
+from dbxsql import QueryHandler
+from dbxsql.settings import settings
+from dbxsql.main import ApplicationRunner
+
+os.environ["SSL_CERT_FILE"]  = certifi.where()
+
+
+with QueryHandler(settings) as handler:
+    app_runner = ApplicationRunner(handler)
+    app_runner.run_example_queries()
+```
+
 ## License
 
 MIT License
